@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your Onelogica</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h1>Interview Slot Booking Confirmation</h1>
+        <p>Dear {{ email }},</p>
+        
+        <p>Congratulations! Your interview slot has been successfully booked for:</p>
+        
+        <ul>
+            <li><strong>Date:</strong> {{ selected_slot_date }}</li>
+            <li><strong>Time:</strong> {{selected_slot_start_time}} to {{selected_slot_end_time}} </li>
+            <li><strong>Location:</strong> Remote</li>
+            <li><strong>Timezone:</strong> Indian Standard Time (IST)</li>
+            <li><strong>Meet Link:</strong> <a href="{{ interview_link }}" target="_blank">Click Here To Join Interview</a></li>
+        </ul>
+    
+        <p>Please make sure to adhere to the following guidelines for a successful interview:</p>
+        
+        <ul>
+            <li>Accept the invitation promptly; otherwise, the slot may be assigned to other candidates.</li>
+            <li>Ensure you have two completed demo projects ready for discussion.</li>
+            <li>Set up all the necessary tools and environments in advance.</li>
+            <li>Keep your camera turned on during the interview.</li>
+            <li>Find a quiet and distraction-free place for the interview.</li>
+        </ul>
+    
+        <p>If you have any questions or need further assistance, please feel free to reach out to <a href="mailto:hr@onelogica.com">hr@onelogica.com</a></p>
+    
+        <p>Best regards,<br>Onelogica</p>
+        
+        <div class="footer">
+            <p>&copy; {{ current_year }} Onelogica</p>
+        </div>
+    </div>
+    
+</body>
+</html>

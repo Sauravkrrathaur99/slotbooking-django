@@ -1,0 +1,157 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Include necessary CSS and JS libraries for styling and date/time selection (e.g., Bootstrap, jQuery) -->
+    <title>Interview Slot Booking</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            background-color: #0d152e; /* Change the background color as needed */
+        }
+
+        .navbar-brand img {
+            max-height: 40px; /* Adjust the logo height as needed */
+        }
+
+        .current-datetime {
+            color: white; /* Change text color as needed */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img{
+            mix-blend-mode: none;
+        }
+
+        /* Add more CSS styling for the form and other elements as needed */
+    </style>
+    
+</head>
+<body>
+    <!-- Center content vertically and horizontally -->
+   
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <!-- Company Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'Onelogica.gif' %}" alt="Company Logo">
+                </a>
+                <!-- Current Date and Time -->
+                <div class="current-datetime ml-auto">
+                    <!-- Display current date and time using JavaScript -->
+                </div>
+            </div>
+        </nav>
+        <div class="d-flex align-items-center justify-content-center" style="min-height: 60vh;">
+
+        <div class="container">
+            <!-- Heading -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Interview Slot Booking</h1>
+                </div>
+            </div>
+
+            <!-- Slot Booking Form -->
+            <div class="row justify-content-center"> <!-- Center the form within the row -->
+                <div style="display: flex;justify-content: center;" class="col-md-6 mt-2">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                      
+                            {{ form.slot.label_tag }}
+                            <select class="form-control" id="slotDropdown" name="{{ form.slot.name }}">
+                                <option value="" disabled selected>Select Available Slot</option>
+                                {% for slot in form.slot.field.choices %}
+                                    <option value="{{ slot.0 }}">{{ slot.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                       
+                        <button type="submit" id="bookSlotBtn" class="btn btn-primary btn-block">Book Slot</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <footer style="background-color: whitesmoke;" class="footer fixed-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-left">
+                    <p>&copy; {{ current_year }} <a target="_blank" style="text-decoration: none;color: black;" href="www.onelogica.com">Onelogica</a></p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p>Best wishes from <a target="_blank" style="text-decoration: none;color: black;" href="www.onelogica.com">Onelogica</a></p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <p><a target="_blank" style="text-decoration: none;color: black;" href="www.onelogica.com">www.onelogica.com</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    
+
+
+
+
+  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+        // Function to change the button text to "Booking..."
+        function changeButtonText() {
+            document.getElementById('bookSlotBtn').textContent = 'Booking...';
+        }
+    
+        // Add an event listener to the form to execute the function when the button is clicked
+        document.querySelector('form').addEventListener('submit', changeButtonText);
+    </script>
+    <script>
+       function updateCurrentDateTime() {
+        var currentDateTime = new Date();
+        var options = {
+            year: 'numeric',
+            month: 'short', // Short month name (e.g., "Sep")
+            day: '2-digit', // Two-digit day (e.g., "30")
+            hour: '2-digit', // Two-digit hour (e.g., "07")
+            minute: '2-digit', // Two-digit minute (e.g., "09")
+            second: '2-digit', // Two-digit second (e.g., "15")
+            hour12: true, // Use 12-hour time format with AM/PM
+        };
+        var formattedDateTime = currentDateTime.toLocaleString('en-US', options);
+        document.querySelector('.current-datetime').textContent = formattedDateTime;
+    }
+
+    // Update the current date and time every second
+    setInterval(updateCurrentDateTime, 1000);
+
+    // Initial call to display the current date and time
+    updateCurrentDateTime();
+
+    </script>
+
+    <!-- Include Bootstrap JS and jQuery scripts if needed -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
