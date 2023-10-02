@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-(wk+5+wn*4mkzckr(50eo&l%ran--95ibli01@$!^6i6a*ff_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['20.244.6.117']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,10 +141,10 @@ STATIC_ROOT = BASE_DIR + '/staticfiles/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sauravkr.rathaur9@gmail.com'
-EMAIL_HOST_PASSWORD = 'ermthowwgdznbtul'
+EMAIL_HOST_USER = 'onelogica.connect@gmail.com'
+EMAIL_HOST_PASSWORD = 'isgcmjscdsluqldf'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'sauravkr.rathaur9@gmail.com'
+DEFAULT_FROM_EMAIL = 'onelogica.connect@gmail.com'
 
 
 # Default primary key field type

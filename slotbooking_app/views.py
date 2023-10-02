@@ -63,17 +63,23 @@
 
 
 # views.py
+import time
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from slotbooking_app.models import BookedSlots, InterviewSlot, MeetingLink
 from .forms import SlotBookingForm
 from django.core.mail import send_mail
 import datetime
+from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
+
+
+
 
 def slot_booking(request):
     time_slots = InterviewSlot.objects.all()
     current_year = datetime.datetime.now().year
+    user = request.user
     try:
         common_meeting_link = MeetingLink.objects.first().link
     except MeetingLink.DoesNotExist:
@@ -87,6 +93,7 @@ def slot_booking(request):
             selected_slot.save()
             # Create and save a new instance of BookedSlots
             booked_slot = BookedSlots(
+                user=user,
                 email=email,
                 date=selected_slot.date,
                 time_start=selected_slot.time_start,
@@ -113,12 +120,14 @@ def slot_booking(request):
             }    
             user_html_content = render_to_string('emailbody.html', user_context)
             email_subject_user = 'Your Interview Slot Booking Confirmation'
-            from_email = 'sauravkr.rathaur9@gmail.com'
+            from_email = 'onelogica.connect@gmail.com'
             to_email = [email]
             
             user_msg = EmailMultiAlternatives(email_subject_user, '', from_email, to_email)
             user_msg.attach_alternative(user_html_content, "text/html")
             user_msg.send()
+            time.sleep(2)
+            messages.success(request, 'Congratulations!! Your slot is booked, please check your email for details. All The Best !!')
 
 
             return redirect("/")  # Redirect to a success page

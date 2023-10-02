@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+
+
+{% block title %}{{ title }} | {{ site_title|default:_('Onelogica Site Admin') }}{% endblock %}
+
+
+{% block branding %}
+<style>
+    #header{
+        background-color: #0d152e;
+    }
+</style>
+
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'Onelogica.gif' %}" alt="Company Logo" height="30">
+    </a>
+</h1>
+{% endblock %}
