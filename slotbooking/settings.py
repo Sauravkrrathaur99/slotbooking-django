@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-(wk+5+wn*4mkzckr(50eo&l%ran--95ibli01@$!^6i6a*ff_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['20.244.6.117']
 
 
 # Application definition
@@ -133,8 +133,8 @@ STATIC_ROOT = BASE_DIR + '/staticfiles/'
 # EMAIL_HOST = 'smtp.office365.com'  # Microsoft SMTP server
 # EMAIL_PORT = 587  # Port for TLS encryption
 # EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'saurav.rathaur@onelogica.com'  # Your Microsoft email address
-# EMAIL_HOST_PASSWORD = 'Hanshal@16052010'
+# EMAIL_HOST_USER = '+++++++++++++++++'  # Your Microsoft email address
+# EMAIL_HOST_PASSWORD = '++++++++++++++++++++'
 
 
 
