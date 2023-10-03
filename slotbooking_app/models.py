@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class InterviewSlot(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    slot_duration = models.PositiveIntegerField(null=True, blank=False)
     date = models.DateField(null=True, blank=False)
     time_start = models.TimeField(null=True, blank=False)
     time_end = models.TimeField(null=True, blank=False)
