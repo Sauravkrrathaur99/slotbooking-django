@@ -68,25 +68,8 @@ admin.site.site_header = "Interview Slot Booking App"
 #             return queryset
 #         return queryset.filter(user=request.user)
     
-    
-class InterviewSlotAdmin(admin.ModelAdmin):
-    list_display = ('formatted_datetime', 'is_booked',)
 
-    def get_list_display(self, request):
-        # Check if the logged-in user is a superuser or staff
-        if request.user.is_superuser:
-            return super().get_list_display(request) + ('user',)
-        return super().get_list_display(request)
 
-    def formatted_datetime(self, obj):
-        return f'{obj.date.strftime("%Y-%m-%d")} {obj.time_start.strftime("%I:%M %p")} - {obj.time_end.strftime("%I:%M %p")}'
-    formatted_datetime.short_description = 'Date and Time'
-
-    def get_form(self, request, obj=None, **kwargs):
-        # Automatically populate the user field with the logged-in user
-        form = super().get_form(request, obj, **kwargs)
-        form.base_fields['user'].initial = request.user
-        return form
     
 
     # def save_model(self, request, obj, form, change):
@@ -116,6 +99,25 @@ class InterviewSlotAdmin(admin.ModelAdmin):
     #         current_datetime = time_end
 
     #     super().save_model(request, obj, form, change)
+    
+class InterviewSlotAdmin(admin.ModelAdmin):
+    list_display = ('formatted_datetime', 'is_booked',)
+
+    def get_list_display(self, request):
+        # Check if the logged-in user is a superuser or staff
+        if request.user.is_superuser:
+            return super().get_list_display(request) + ('user',)
+        return super().get_list_display(request)
+
+    def formatted_datetime(self, obj):
+        return f'{obj.date.strftime("%Y-%m-%d")} {obj.time_start.strftime("%I:%M %p")} - {obj.time_end.strftime("%I:%M %p")}'
+    formatted_datetime.short_description = 'Date and Time'
+
+    def get_form(self, request, obj=None, **kwargs):
+        # Automatically populate the user field with the logged-in user
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['user'].initial = request.user
+        return form
 
     def save_model(self, request, obj, form, change):
         # Automatically populate the user field with the logged-in user
@@ -129,30 +131,24 @@ class InterviewSlotAdmin(admin.ModelAdmin):
         end_datetime = timezone.make_aware(
             timezone.datetime.combine(obj.date, obj.time_end)
         )
+        print("end_datetime ", end_datetime)
 
         current_datetime = start_datetime
-        while current_datetime < end_datetime:
+        while current_datetime < end_datetime:  
             time_end = current_datetime + timedelta(minutes=slot_duration_minutes)
-            
-            # Ensure that slots don't exceed the specified end time
-            if time_end <= end_datetime:
-                # Check if it's not the final slot to avoid creating an extra slot
-                if time_end != end_datetime:
-                    interview_slot = InterviewSlot(
-                        user=obj.user,
-                        date=obj.date,
-                        time_start=current_datetime.time(),
-                        time_end=time_end.time(),
-                        slot_duration=obj.slot_duration,
-                    )
-                    interview_slot.save()
-            
+            interview_slot = InterviewSlot(
+                user=obj.user,
+                date=obj.date,
+                time_start=current_datetime.time(),
+                time_end=time_end.time(),
+                slot_duration=obj.slot_duration,
+            )
+            print("intervie" , interview_slot)
+            interview_slot.save()
             current_datetime = time_end
 
         super().save_model(request, obj, form, change)
 
-
-    
     def get_queryset(self, request):
         # Filter interview slots based on the logged-in user
         queryset = super().get_queryset(request)
@@ -248,7 +244,7 @@ class BookedSlotsAdmin(admin.ModelAdmin):
         }
         user_html_content = render_to_string('emailbody.html', user_context)
         email_subject_user = 'Your Interview Slot Booking Confirmation'
-        from_email = 'sauravkr.rathaur9@gmail.com'
+        from_email = 'saurav.rathaur@onelogica.com'
         to_email = [obj.email]
 
         user_msg = EmailMultiAlternatives(email_subject_user, '', from_email, to_email)

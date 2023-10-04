@@ -1,9 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://kit.fontawesome.com/faf1f109df.js" crossorigin="anonymous"></script> 
     <title>Welcome to Your Onelogica</title>
     <style>
         /* Add your custom CSS styles here */
@@ -25,6 +28,7 @@
         }
         p {
             font-size: 16px;
+            padding: 0;
             color: #555;
         }
         .footer {
@@ -32,22 +36,42 @@
             text-align: center;
             color: #888;
         }
+        .interview-section {
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .calendar-icon {
+            font-size: 36px;
+        }
+        .interview-time {
+            font-size: 20px;
+        }
+        .interview-time strong {
+            color: #333;
+        }
+        .interview-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <div class="email-container">
-        <h1>Interview Slot Booking Confirmation</h1>
+        <h3>Interview Slot Booking Confirmation</h3>
         <p>Dear {{ email }},</p>
         
-        <p>Congratulations! Your interview slot has been successfully booked for:</p>
-        
-        <ul>
-            <li><strong>Date:</strong> {{ selected_slot_date }}</li>
-            <li><strong>Time:</strong> {{selected_slot_start_time}} to {{selected_slot_end_time}} </li>
-            <li><strong>Location:</strong> Remote</li>
-            <li><strong>Timezone:</strong> Indian Standard Time (IST)</li>
-            <li><strong>Meet Link:</strong> <a href="{{ interview_link }}" target="_blank">Click Here To Join Interview</a></li>
-        </ul>
+        <div class="interview-section">
+            <p class="calendar-icon"><i class="fas fa-calendar-alt calendar-icon"></i></p>
+            <p class="interview-time">Wednesday, October 11, 2023<br>10:00 AM - 10:30 AM</p>
+            <p style="font-size: 10px;">(UTC) Coordinated Universal Time</p>
+            <a href="{{ interview_link }}" class="interview-button" target="_blank">Join your appointment</a><p>via Microsoft Teams</p>
+        </div>
     
         <p>Please make sure to adhere to the following guidelines for a successful interview:</p>
         

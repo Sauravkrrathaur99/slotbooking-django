@@ -29,6 +29,14 @@ def slot_booking(request):
             slot_user = selected_slot.user
             selected_slot.is_booked = True
             selected_slot.save()
+
+            # Fetch the meeting link associated with the slot_user
+            try:
+                interviewlink = MeetingLink.objects.get(user=slot_user)
+                interview_link = interviewlink.link
+            except MeetingLink.DoesNotExist:
+                interview_link = None
+
             # Create and save a new instance of BookedSlots
             booked_slot = BookedSlots(
                 user=slot_user,
@@ -36,7 +44,7 @@ def slot_booking(request):
                 date=selected_slot.date,
                 time_start=selected_slot.time_start,
                 time_end=selected_slot.time_end,
-                link=common_meeting_link
+                link=interview_link
             )
             booked_slot.save()
 
@@ -53,12 +61,12 @@ def slot_booking(request):
                 'selected_slot_date': selected_slot.date.strftime("%Y-%m-%d"),
                 'selected_slot_start_time': selected_slot.time_start.strftime("%I:%M %p"),
                 'selected_slot_end_time': selected_slot.time_end.strftime("%I:%M %p"),
-                'interview_link': common_meeting_link, 
+                'interview_link': interview_link,
                 "current_year": current_year 
             }    
             user_html_content = render_to_string('emailbody.html', user_context)
             email_subject_user = 'Your Interview Slot Booking Confirmation'
-            from_email = 'onelogica.connect@gmail.com'
+            from_email = 'saurav.rathaur@onelogica.com'
             to_email = [email]
             
             user_msg = EmailMultiAlternatives(email_subject_user, '', from_email, to_email)
