@@ -10,7 +10,7 @@ import datetime
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 
-
+from django.utils.safestring import mark_safe
 
 
 def slot_booking(request):
@@ -73,7 +73,8 @@ def slot_booking(request):
             user_msg.attach_alternative(user_html_content, "text/html")
             user_msg.send()
             time.sleep(2)
-            messages.success(request, 'Congratulations!! Your slot is booked, please check your email for details. All The Best !!')
+            message = mark_safe('<h5>Congratulations!!</h5><p>Your slot is booked. Please check your email for details. If you don\'t see the email in your inbox, please also check your <b style="color:"red">SPAM</b> folder. All the best!</p>')
+            messages.success(request, message)
 
 
             return redirect("/")  # Redirect to a success page
